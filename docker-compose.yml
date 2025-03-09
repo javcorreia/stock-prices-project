@@ -1,0 +1,41 @@
+services:
+  nginx:
+    image: 'nginx:1.27-alpine'
+    ports:
+      - '8000:80'
+      - '8001:81'
+    volumes:
+      - './docker/configs/nginx/default.conf:/etc/nginx/conf.d/default.conf'
+      - './client:/app-client'
+      - './api:/app-api'
+    depends_on:
+      - client
+      - api
+
+  client:
+    image: client
+    build:
+      context: .
+      dockerfile: docker/client.Dockerfile
+    volumes:
+      - './client:/app-client'
+
+  api:
+    image: api
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    volumes:
+      - './api:/app-api'
+
+  db:
+    image: postgres:17-bookworm
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_PASSWORD: 'system'
+    volumes:
+      - 'dbdata:/var/lib/postgresql/data:rw'
+
+volumes:
+  dbdata:
