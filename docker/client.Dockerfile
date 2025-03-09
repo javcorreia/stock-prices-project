@@ -6,15 +6,10 @@ RUN install-php-extensions gd xdebug zip pcntl pdo_pgsql bcmath
 COPY ./docker/configs/php/php.ini /usr/local/etc/php/php.ini
 COPY ./docker/configs/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 
-#RUN groupadd -g 1000 appuser && \
-#    useradd -u 1000 -g appuser -m -s /bin/bash appuser
+COPY --from=composer/composer:2.8-bin /composer /usr/bin/composer
 
 WORKDIR /app-client
-#RUN chown -R appuser:appuser /app-client
 
-#USER appuser
-#
-#COPY --chown=appuser:appuser ./client /app-client
 COPY ./client /app-client
 
 CMD ["php-fpm"]

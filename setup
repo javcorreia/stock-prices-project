@@ -1,0 +1,5 @@
+#!/bin/bash
+docker run --rm -it -v $PWD/api:/app -u $(id -u):$(id -g) composer:2.8 install --ignore-platform-reqs --prefer-dist --optimize-autoloader
+docker run --rm -it -v $PWD/client:/app -u $(id -u):$(id -g) composer:2.8 install --ignore-platform-reqs --prefer-dist --optimize-autoloader
+docker run --rm -it -v $PWD/client:/app -u $(id -u):$(id -g) -w /app node:lts-alpine npm install
+docker run --rm -it -v $PWD/client:/app -u $(id -u):$(id -g) -w /app node:lts-alpine npm run build

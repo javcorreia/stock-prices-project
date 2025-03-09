@@ -6,6 +6,8 @@ RUN install-php-extensions gd xdebug zip pcntl pdo_pgsql bcmath
 COPY ./docker/configs/php/php.ini /usr/local/etc/php/php.ini
 COPY ./docker/configs/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 
+COPY --from=composer/composer:2.8-bin /composer /usr/bin/composer
+
 WORKDIR /app-api
 
 COPY ./api /app-api

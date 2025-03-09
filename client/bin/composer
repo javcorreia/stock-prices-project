@@ -1,0 +1,2 @@
+#!/bin/bash
+docker exec -u "$(id -u):$(id -g)" -it stock-app-client-1 composer "$@"
