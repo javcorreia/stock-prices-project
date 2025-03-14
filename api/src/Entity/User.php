@@ -29,10 +29,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'The password should not be blank.')]
-    #[Assert\Length(
-        min: 4,
-        minMessage: 'The password should be at least {{ limit }} characters long.',
-    )]
     private ?string $password = null;
 
     #[ORM\Column]

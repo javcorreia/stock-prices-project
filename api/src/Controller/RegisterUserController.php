@@ -24,7 +24,11 @@ final class RegisterUserController extends AbstractController
         $requestPayload = $request->getPayload()->all();
         $user = new User();
         $user->setEmail($requestPayload['email'] ?? '');
-        $user->setPassword($passwordHasher->hashPassword($user, $requestPayload['password'] ?? ''));
+        $user->setPassword(
+            !empty($requestPayload['password'])
+                ? $passwordHasher->hashPassword($user, $requestPayload['password'])
+                : ''
+        );
         $user->setCreatedAt(new \DateTimeImmutable());
         $user->setUpdatedAt(new \DateTimeImmutable());
 
