@@ -27,6 +27,10 @@ cd stock-prices-project
 ```shell
 ./setup
 ```
+- initiate docker stack
+```shell
+docker compose up -d --build
+```
 - setup api
 ```shell
 cd api
@@ -36,11 +40,6 @@ bin/composer run setup
 ```shell
 cd ../client
 bin/composer run setup
-```
-- initiate docker stack
-```shell
-cd ..
-docker compose up -d --build
 ```
 
 ## Usage
