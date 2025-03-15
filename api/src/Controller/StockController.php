@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\RequestHistoryRepository;
 use App\Service\RegisterRequest;
 use App\Service\StockMail;
 use App\Service\StockService\StockServiceInterface;
@@ -50,8 +51,19 @@ final class StockController extends AbstractController
     }
 
     #[Route('/api/history', name: 'app_stock_history', methods: ['GET'])]
-    public function history(): JsonResponse
+    public function history(Request $request, RequestHistoryRepository $repository): JsonResponse
     {
-        return $this->json([]);
+        $page = $request->query->get('page', 1);
+        $total = $repository->countByUserId($this->getUser()->getId());
+
+        $response = [];
+        foreach ($repository->findByUserId($this->getUser()->getId(), $page) as $item) {
+            $response[] = $item->getRequestData();
+        }
+
+        return $this->json([
+            'total' => $total,
+            'results' => $response,
+        ]);
     }
 }
