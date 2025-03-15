@@ -6,11 +6,13 @@ use App\Repository\RequestHistoryRepository;
 use App\Service\RegisterRequest;
 use App\Service\StockMail;
 use App\Service\StockService\StockServiceInterface;
+use Nelmio\ApiDocBundle\Attribute\Security;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use OpenApi\Attributes as OA;
 
 final class StockController extends AbstractController
 {
@@ -22,6 +24,18 @@ final class StockController extends AbstractController
     }
 
     #[Route('/api/stock', name: 'app_stock_check', methods: ['GET'])]
+    #[OA\Get(
+        description: 'Checks stock info from a given symbol using Alpha Vantage API.',
+        summary: 'Get stock info',
+    )]
+    #[OA\Parameter(
+        name: 'q',
+        description: 'The symbol of the stock to check, e.g. IBM',
+        in: 'query',
+        required: true,
+        schema: new OA\Schema(type: 'string')
+    )]
+    #[Security(name: 'Bearer')]
     public function stock(
         Request $request,
         StockServiceInterface $stockService,
@@ -51,6 +65,18 @@ final class StockController extends AbstractController
     }
 
     #[Route('/api/history', name: 'app_stock_history', methods: ['GET'])]
+    #[OA\Get(
+        description: 'Check request history from the user',
+        summary: 'Get stock request history',
+    )]
+    #[OA\Parameter(
+        name: 'page',
+        description: 'The page number to retrieve the history, e.g. 1',
+        in: 'query',
+        required: false,
+        schema: new OA\Schema(type: 'string'),
+    )]
+    #[Security(name: 'Bearer')]
     public function history(Request $request, RequestHistoryRepository $repository): JsonResponse
     {
         $page = $request->query->get('page', 1);
