@@ -25,6 +25,9 @@ services:
     build:
       context: .
       dockerfile: docker/api.Dockerfile
+    environment:
+      - APP_ENV=dev
+      - APP_DEBUG=1
     volumes:
       - './api:/app-api'
 
@@ -36,6 +39,11 @@ services:
       POSTGRES_PASSWORD: 'system'
     volumes:
       - 'dbdata:/var/lib/postgresql/data:rw'
+
+  cache:
+    image: valkey/valkey:8.1-alpine
+    ports:
+      - '16379:6379'
 
 volumes:
   dbdata:
