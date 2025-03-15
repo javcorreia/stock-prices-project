@@ -21,6 +21,12 @@ class RequestHistory
     #[ORM\Column]
     private array $request_data = [];
 
+    #[ORM\Column]
+    private ?int $user_id = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ip_address = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +52,30 @@ class RequestHistory
     public function setRequestData(array $request_data): static
     {
         $this->request_data = $request_data;
+
+        return $this;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(int $user_id): static
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getIpAddress(): ?string
+    {
+        return $this->ip_address;
+    }
+
+    public function setIpAddress(?string $ip_address): static
+    {
+        $this->ip_address = $ip_address;
 
         return $this;
     }

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Service\RegisterRequest;
+use App\Service\StockMail;
 use App\Service\StockService\StockServiceInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +21,12 @@ final class StockController extends AbstractController
     }
 
     #[Route('/api/stock', name: 'app_stock_check', methods: ['GET'])]
-    public function stock(Request $request, StockServiceInterface $stockService): JsonResponse
+    public function stock(
+        Request $request,
+        StockServiceInterface $stockService,
+        StockMail $stockMail,
+        RegisterRequest $registerRequest,
+    ): JsonResponse
     {
         if (!$request->query->has('q') || empty($request->query->get('q'))) {
             $this->logger->error('Query parameter is required');
@@ -28,6 +35,23 @@ final class StockController extends AbstractController
             ], 400);
         }
 
-        return $this->json($stockService->getStock($request->query->get('q')));
+        $stockInfo = $stockService->getStock($request->query->get('q'));
+        $stockMail->send($this->getUser()->getEmail(), $stockInfo);
+        $registerRequest->register(
+            array_merge(
+                ['date' => new \DateTimeImmutable()->format('Y-m-dTH:i:sZ')],
+                $stockInfo,
+            ),
+            $this->getUser()->getId(),
+            $request->getClientIp(),
+        );
+
+        return $this->json($stockInfo);
+    }
+
+    #[Route('/api/history', name: 'app_stock_history', methods: ['GET'])]
+    public function history(): JsonResponse
+    {
+        return $this->json([]);
     }
 }
