@@ -51,4 +51,13 @@ class RequestHistoryRepository extends ServiceEntityRepository
                 ->getSingleScalarResult();
         });
     }
+
+    public function findLastInsertedRecord(): ?RequestHistory
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.id', 'DESC')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

@@ -4,7 +4,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/dbal": "^3",
@@ -84,6 +84,11 @@
             "composer run migrate",
             "composer run jwt-keys"
         ],
+        "tests": [
+            "composer run database-tests",
+            "composer run migrate-tests",
+            "composer run phpunit"
+        ],
         "database": [
             "bin/console doctrine:database:create -n --if-not-exists"
         ],
@@ -92,6 +97,15 @@
         ],
         "jwt-keys": [
             "bin/console lexik:jwt:generate-keypair -n --skip-if-exists"
+        ],
+        "phpunit": [
+            "php bin/phpunit"
+        ],
+        "database-tests": [
+            "bin/console doctrine:database:create -n --if-not-exists --env=test"
+        ],
+        "migrate-tests": [
+            "bin/console doctrine:migration:migrate -n --env=test"
         ]
     },
     "conflict": {
@@ -105,8 +119,12 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^9.5",
         "rector/rector": "^2.0",
+        "symfony/browser-kit": "7.2.*",
+        "symfony/css-selector": "7.2.*",
         "symfony/maker-bundle": "^1.62",
+        "symfony/phpunit-bridge": "^7.2",
         "symfony/var-dumper": "7.2.*"
     }
 }

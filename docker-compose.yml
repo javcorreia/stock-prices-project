@@ -31,9 +31,6 @@ services:
     build:
       context: .
       dockerfile: docker/api.Dockerfile
-    environment:
-      - APP_ENV=dev
-      - APP_DEBUG=1
     volumes:
       - "./api:/app-api"
     depends_on:
@@ -46,9 +43,6 @@ services:
     command: bin/console messenger:consume async -vv
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    environment:
-      - APP_ENV=dev
-      - APP_DEBUG=1
     volumes:
       - "./api:/app-api"
     depends_on:

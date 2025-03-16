@@ -69,3 +69,5 @@ A json file can be generated at [APIDocJSON](http://127.0.0.1:8001/api/doc.json)
 ## Mails
 Mailpit is being used as local smtp mail catcher to ease development.  
 Sent emails can be read in the mailpit inbox interface at [127.0.0.1:8025](http://127.0.0.1:8025/).
+
+## Testing
