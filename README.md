@@ -71,3 +71,7 @@ Mailpit is being used as local smtp mail catcher to ease development.
 Sent emails can be read in the mailpit inbox interface at [127.0.0.1:8025](http://127.0.0.1:8025/).
 
 ## Testing
+To run the unit tests execute the following command in `api` root directory:
+```shell
+bin/composer run tests
+```
