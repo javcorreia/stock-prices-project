@@ -1,12 +1,12 @@
 <script setup>
-import {ref} from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
+import {ref} from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
-const email = ref('');
-const password = ref('');
-const router = useRouter();
-const error = ref('');
+const email = ref('')
+const password = ref('')
+const router = useRouter()
+const error = ref('')
 
 const handleSubmit = async () => {
     try {
@@ -17,15 +17,16 @@ const handleSubmit = async () => {
             headers: {
                 'Content-Type': 'application/json',
             }
-        });
+        })
 
-        const {token} = response.data;
-        document.cookie = `jwt=${token}; path=/; httpOnly;`;
-        await router.push('/');
+        const {token} = response.data
+        sessionStorage.setItem('token', token)
+        await router.push('/')
     } catch (error) {
-        console.error(error);
+        console.error(error)
+        error.value = error
     }
-};
+}
 </script>
 
 <template>

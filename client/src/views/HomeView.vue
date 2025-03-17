@@ -1,9 +1,26 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import {ref} from 'vue'
+import axios from 'axios'
+
+const stock = ref('')
+
+const checkStock = () => {
+    try {
+
+    } catch (error) {
+        console.error(error)
+    }
+}
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+    <main>
+        <form @submit.prevent="checkStock">
+            <div>
+                <label for="stock">Stock Symbol:</label>
+                <input type="text" id="stock" v-model="stock" required/>
+            </div>
+            <button type="submit">Check Stock</button>
+        </form>
+    </main>
 </template>
