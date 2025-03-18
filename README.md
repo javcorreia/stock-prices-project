@@ -5,14 +5,6 @@ Uses the [AlphaVantage](https://www.alphavantage.co/) api service to get the lat
 ## Requirements
 - [Docker](https://docs.docker.com/get-started/get-docker/)
 
-### Optional requirements
-There's no need to install extra packages.  
-Tools to run the needed setup are provided in the `bin` directories of each stack.  
-But if you want them installed in your system:
-- [PHP](https://php.new)
-- [Composer](https://getcomposer.org/download/)
-- [NVM](https://github.com/nvm-sh/nvm) for your node needs
-
 ## Installation
 - clone the project:
 ```shell
