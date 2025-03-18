@@ -20,44 +20,38 @@ git clone https://github.com/javcorreia/stock-prices-project
 ```
 - change to the project directory:
 ```shell
-# it's the following directory, if not changed in clone 
 cd stock-prices-project
 ```
 - run initial main setup:
 ```shell
 ./setup
 ```
-- initiate docker stack
+- initiate docker stack (everything is run in docker)
 ```shell
 docker compose up -d --build
 ```
-- setup api
+- set up the api (creates the database, runs the migrations and creates the jwt key/pair used by the jwt library)
 ```shell
 cd api
 bin/composer run setup
 ```
-- setup client
-```shell
-cd ../client
-bin/composer run setup
-```
 
-## Infrastructure 
+## Docker infrastructure 
 The api and client are configured as PHP-FPM applications accessed through nginx as proxy.  
 - For emails, [mailpit](https://mailpit.axllent.org/) is configured.  
 - For caching, [Valkey](https://valkey.io/), a Redis compatible solution, is configured.  
 - For database needs, PostgreSQL is configured.  
 - For messaging queues, RabbitMQ is congiured.
 
-| Container | Description                                                     | Exposed Ports |
-|-----------|-----------------------------------------------------------------|---------------|
-| nginx     | nginx configured to access both api and client container        | 8000 - 8001   |
-| api       | the api container with php-fpm (Symfony)                        |           |
-| client    | the frontend container with php-fpm (Laravel with Vue/Innertia) |           |
-| db        | the database container (PostgreSQL)                             | 5433          |
-| cache     | the cache container (Valkey/Redis)                              | 16379          |
-| rabbitmq     | the message queue container (RabbitMQ)                          | 15672          |
-| mailpit     | the mailer container (RabbitMQ)                                 | 8025          |
+| Container | Description                                              | Exposed Ports |
+|-----------|----------------------------------------------------------|---------------|
+| nginx     | nginx configured to access both api and client container | 8001          |
+| api       | the api container with php-fpm (Symfony)                 | 9000          |
+| client    | the client container running node (vue3)                 | 8000          |
+| db        | the database container (PostgreSQL)                      | 5433          |
+| cache     | the cache container (Valkey/Redis)                       | 16379         |
+| rabbitmq  | the message queue container (RabbitMQ)                   | 15672         |
+| mailpit   | the mailer container (RabbitMQ)                          | 8025          |
 
 
 ## API
@@ -75,3 +69,17 @@ To run the unit tests execute the following command in `api` root directory:
 ```shell
 bin/composer run tests
 ```
+
+## Client
+A small client to handle the api calls is available at `http://localhost:8000`.  
+It was made using the official [vuejs](https://github.com/vuejs/create-vue) `create-vue` starter kit.  
+The following packages were added to aid in the development:
+- axios
+- jwt-decode
+- tailwindcss
+
+## TODO
+- [ ] configure throttle in api endpoints using [Symfony's rate limiter](https://symfony.com/doc/current/rate_limiter.html)
+- [ ] more unit tests to increase coverage
+- [ ] list the history results in a nice formatted table with pagination
+- [ ] improve the docker images for production deploy

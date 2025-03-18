@@ -1,16 +1,15 @@
-FROM php:8.4-fpm-bookworm
+FROM node:lts-bookworm-slim
 
-ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN install-php-extensions gd xdebug zip pcntl pdo_pgsql bcmath redis
+COPY ../client/public /client/public
+COPY ../client/src /client/src
+COPY ../client/index.html /client/index.html
+COPY ../client/jsconfig.json /client/jsconfig.json
+COPY ../client/package.json /client/package.json
+COPY ../client/package-lock.json /client/package-lock.json
+COPY ../client/vite.config.js /client/vite.config.js
 
-COPY ./docker/configs/php/php.ini /usr/local/etc/php/php.ini
-COPY ./docker/configs/php/xdebug.ini /usr/local/etc/php/conf.d/90-xdebug.ini
-COPY ./docker/configs/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+WORKDIR /client
 
-COPY --from=composer/composer:2.8-bin /composer /usr/bin/composer
+RUN npm install
 
-WORKDIR /app-client
-
-COPY ./client /app-client
-
-CMD ["php-fpm"]
+CMD ["npm", "run", "dev"]
