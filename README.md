@@ -27,6 +27,10 @@ docker compose up -d --build
 cd api
 bin/composer run setup
 ```
+- configure you Alpha Vantage API key by setting the following env var in the `api/.env` file 
+```dotenv
+ALPHA_VANTAGE_API_KEY=YOUAPIKEY
+```
 
 ## Docker infrastructure 
 The api and client are configured as PHP-FPM applications accessed through nginx as proxy.  
