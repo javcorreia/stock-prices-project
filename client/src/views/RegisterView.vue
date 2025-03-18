@@ -1,5 +1,5 @@
 <script setup>
-import RegisterForm from "../components/RegisterForm.vue";
+import RegisterForm from "../components/RegisterForm.vue"
 </script>
 
 <template>
@@ -7,7 +7,3 @@ import RegisterForm from "../components/RegisterForm.vue";
         <RegisterForm/>
     </main>
 </template>
-
-<style>
-
-</style>
