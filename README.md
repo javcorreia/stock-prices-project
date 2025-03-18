@@ -51,7 +51,7 @@ The api and client are configured as PHP-FPM applications accessed through nginx
 | db        | the database container (PostgreSQL)                      | 5433          |
 | cache     | the cache container (Valkey/Redis)                       | 16379         |
 | rabbitmq  | the message queue container (RabbitMQ)                   | 15672         |
-| mailpit   | the mailer container (RabbitMQ)                          | 8025          |
+| mailpit   | the mailer container (Mailpit)                           | 8025          |
 
 
 ## API
