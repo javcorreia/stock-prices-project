@@ -35,15 +35,16 @@ The api and client are configured as PHP-FPM applications accessed through nginx
 - For database needs, PostgreSQL is configured.  
 - For messaging queues, RabbitMQ is congiured.
 
-| Container | Description                                              | Exposed Ports |
-|-----------|----------------------------------------------------------|---------------|
-| nginx     | nginx configured to access both api and client container | 8001          |
-| api       | the api container with php-fpm (Symfony)                 | 9000          |
-| client    | the client container running node (vue3)                 | 8000          |
-| db        | the database container (PostgreSQL)                      | 5433          |
-| cache     | the cache container (Valkey/Redis)                       | 16379         |
-| rabbitmq  | the message queue container (RabbitMQ)                   | 15672         |
-| mailpit   | the mailer container (Mailpit)                           | 8025          |
+| Container           | Description                                                                 | Exposed Ports |
+|---------------------|-----------------------------------------------------------------------------|---------------|
+| nginx               | nginx container, proxy to api php-fpm                                       | 8001          |
+| api                 | the api container with php-fpm (Symfony)                                    | 9000          |
+| api-message-handler | the message handler container, handles messages sent to rabbitmq (Symfony)  |               |
+| client              | the client container running node (vue3)                                    | 8000          |
+| db                  | the database container (PostgreSQL)                                         | 5433          |
+| cache               | the cache container (Valkey/Redis)                                          | 16379         |
+| rabbitmq            | the message queue container (RabbitMQ)                                      | 15672         |
+| mailpit             | the mailer container (Mailpit)                                              | 8025          |
 
 
 ## API
