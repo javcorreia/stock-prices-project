@@ -38,7 +38,7 @@ The api and client are configured as PHP-FPM applications accessed through nginx
 | Container           | Description                                                                 | Exposed Ports |
 |---------------------|-----------------------------------------------------------------------------|---------------|
 | nginx               | nginx container, proxy to api php-fpm                                       | 8001          |
-| api                 | the api container with php-fpm (Symfony)                                    | 9000          |
+| api                 | the api container with php-fpm (Symfony)                                    |               |
 | api-message-handler | the message handler container, handles messages sent to rabbitmq (Symfony)  |               |
 | client              | the client container running node (vue3)                                    | 8000          |
 | db                  | the database container (PostgreSQL)                                         | 5433          |
@@ -58,7 +58,12 @@ Mailpit is being used as local smtp mail catcher to ease development.
 Sent emails can be read in the mailpit inbox interface at [127.0.0.1:8025](http://127.0.0.1:8025/).
 
 ## Testing
-To run the unit tests execute the following command in `api` root directory:
+To run the unit tests:
+- make sure the stack is running, run docker compose up if not:
+```shell
+docker compose up -d
+```
+- then, execute the following command in `api` root directory:
 ```shell
 bin/composer run tests
 ```
