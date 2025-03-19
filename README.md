@@ -27,9 +27,9 @@ docker compose up -d --build
 cd api
 bin/composer run setup
 ```
-- configure you Alpha Vantage API key by setting the following env var in the `api/.env` file 
+- configure your [Alpha Vantage API key](https://www.alphavantage.co/support/#api-key) by setting the following env var in the `api/.env` file 
 ```dotenv
-ALPHA_VANTAGE_API_KEY=YOUAPIKEY
+ALPHA_VANTAGE_API_KEY=YOURAPIKEY
 ```
 
 ## Docker infrastructure 
